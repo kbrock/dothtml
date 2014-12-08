@@ -1,0 +1,6 @@
+guard 'rake', :task => :html do
+  watch(/.dot$/)
+  #watch('index.html.erb')
+  #watch('style.css')
+  #watch('behavior.js')
+end

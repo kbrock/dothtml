@@ -1,0 +1,23 @@
+
+# Rakefile to build dot files
+# dependencies:
+# mac 
+# graphviz to convert dot files to svg
+
+require "dothtml/dot_task"
+
+Dothtml::DotTask.new do |t|
+  #t.cdn      = true
+  #t.template = 'index.html.liquid'
+  #t.style    = 'style.css'
+  #t.behavior = 'behavior.js'
+end
+
+task :default => :html
+
+#task :html => %w(file1.html file2.html)
+task :html do
+  Dir.glob("*.dot").each do |f|
+    Rake::Task[f.sub(/\.dot$/, '.html')].invoke
+  end
+end

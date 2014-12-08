@@ -1,0 +1,113 @@
+/* layout */
+body {
+  font-family: "helvetica";
+  font-size: 14px;
+}
+#diagram, #desc-wrap {
+  xborder: 1px solid blue;
+}
+#diagram {
+  float: left;
+}
+#desc-wrap {
+  margin: 0px;
+  margin-left: 840px;
+  padding: 15px 4px 4px 4px;
+
+}
+
+#desc, #choices {
+  border: 1.75px solid #000000;
+  border-radius: 8px;
+  /* cluster background */
+  background-color: #dddddd;
+  padding: 5px;
+  margin: 8px;
+  font-weight: bold;
+}
+
+/* diagram */
+
+text {
+  fill: #666666;
+}
+
+.node.noui path {
+  fill: #dddddd;
+}
+
+.node.same path {
+  stroke: red;
+}
+
+.node.same  text {
+  fill: red;
+}
+
+/* machine title */
+.cluster  text {
+  fill: #000000;
+}
+
+/* machine background */
+.cluster  path {
+  stroke: #000000;
+  fill: #dddddd;
+} 
+ 
+.node path {
+  stroke-width: 2px;
+  stroke: #000000;
+  fill: #ffffff;
+}
+.node text {
+  font-size: 12px;
+}
+
+.client.node path,
+.client.node polygon,
+.client.node polyline,
+.server.node path,
+.server.node polygon,
+.server.node polyline {
+  stroke: green;
+}
+.client-config.node path,
+.client-config.node polygon,
+.client-config.node polyline,
+.server-config.node path,
+.server-config.node polygon,
+.server-config.node polyline {
+  fill: #cccc00;
+}
+
+.edge.src-dest polyton, .edge.src polygon, .edge.dest polygon {
+  stroke: #996600;
+  fill: #996600;
+  z-index: 1;
+}
+.edge.src-dest path, .edge.src path, .edge.dest path {
+  stroke: #996600;
+  z-index: 1;
+}
+
+.active.node text {
+  fill: #000000;
+}
+
+.active.node path,
+.active.node polygon,
+.active.node polyline {
+  stroke: red;
+}
+
+
+/* arrow head */
+.edge polygon {
+  stroke: #996600;
+  fill: #996600;
+}
+/* lines */
+.edge path {
+  stroke: #996600;
+}

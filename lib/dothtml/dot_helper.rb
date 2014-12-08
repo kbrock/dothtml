@@ -7,8 +7,8 @@ class DotHelper
     @source = source
   end
 
-  def dom
-    Nokogiri::XML.parse(File.read(source))
+  def dom(filename)
+    Nokogiri::XML.parse(File.read(filename))
   end
 
   def doc
@@ -57,6 +57,10 @@ class DotHelper
 
   def embed_images
     doc.at("svg").children.before(images)
+  end
+
+  def to_xml
+    doc.at("svg").to_xml
   end
 
   def write(file_name, template_name, locals)

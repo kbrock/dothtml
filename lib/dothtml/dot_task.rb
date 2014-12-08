@@ -1,5 +1,6 @@
 require 'rake'
 require 'rake/tasklib'
+require_relative 'dot_helper'
 
 module Dothtml
   class DotTask < Rake::TaskLib
@@ -13,10 +14,11 @@ module Dothtml
     attr_accessor :html_folder
 
     def initialize(name = :dot)
+      templates = File.expand_path(File.join(File.dirname(__FILE__), "..", "..","templates"))
       @name     = name
-      @style    = 'style.css'
-      @behavior = 'behavior.js'
-      @template = 'index.html.erb'
+      @style    = File.join(templates, 'style.css')
+      @behavior = File.join(templates, 'behavior.js')
+      @template = File.join(templates, 'index.html.erb')
       self.cdn  = true
       yield self if block_given?
       define
@@ -48,11 +50,12 @@ module Dothtml
         puts "#{source} -> #{target}"
 
         doc = DotHelper.new(source)#.embed_images
-        doc.write target, template_name,
+        doc.write target, @template,
                   title:    doc.extractTitle,
-                  body:     doc.at("svg").to_xml,
+                  body:     doc.to_xml,
                   style:    File.read(style),
-                  behavior: File.read(behavior)
+                  behavior: File.read(behavior),
+                  d3js:     d3js
       end
 
       rule '.html' => [".svg", style, template] do |t|

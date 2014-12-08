@@ -1,0 +1,23 @@
+<head>
+  <title><%= title %></title>
+  <script src="<%= d3js %>" charset="utf-8"></script>
+  <style><%= style %></style>
+</head>
+<body>
+<div id="diagram">
+<%= body %>
+</div>
+<div id="desc-wrap">
+  <div id="desc">
+    <div class="src-dest"></div>
+    <div class="active"></div>
+  </div>
+  <div id="choices">
+    <form>
+    </form>
+  </div>
+</div>
+<script>
+<%= behavior %>
+</script>
+</body>
