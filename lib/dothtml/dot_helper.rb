@@ -15,6 +15,13 @@ class DotHelper
     doc ||= dom(@source)
   end
 
+  def extractChoices
+  end
+
+  def descriptions?
+    #doc.css("")
+  end
+
   def extractTitle
     doc.css("title").first.content()
   end

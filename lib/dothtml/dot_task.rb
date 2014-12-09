@@ -53,6 +53,8 @@ module Dothtml
         doc.write target, @template,
                   title:    doc.extractTitle,
                   body:     doc.to_xml,
+                  choices:  doc.extractChoices,
+                  descriptions: doc.descriptions?,
                   style:    File.read(style),
                   behavior: File.read(behavior),
                   d3js:     d3js

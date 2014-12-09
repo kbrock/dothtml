@@ -9,16 +9,22 @@ function markClass(id, className, enabled) {
 function displayRelations(datum, nodeClass, enabled) {
   if (!datum)
     return;
+  // highlight current node (datum.id)
   markClass(datum.id, nodeClass, enabled);
+  // highlight related nodes
   for(var n in datum) {
     if(n != "desc" && n != "id") {
       markClass(datum[n], n, enabled);
     }
   }
+  // update node description
+  // since there are node and edge descriptions, have multiple #desc divs
   var desc = enabled ? (datum.desc || "") : "";
   d3.select("#desc ."+nodeClass).html(desc);
 }
 
+// store attributes in dot's tooltip attribute
+// data associated with each node will split those up
 function extractDatum(node, datum) {
   var info = d3.select(node).select("a");
   if (info && info[0] && info[0][0]) {

@@ -7,16 +7,20 @@
 <div id="diagram">
 <%= body %>
 </div>
+<% if choices || descriptions %>
 <div id="desc-wrap">
   <div id="desc">
     <div class="src-dest"></div>
     <div class="active"></div>
   </div>
+<% if choices %>
   <div id="choices">
     <form>
     </form>
   </div>
+<% end %>
 </div>
+<% end %>
 <script>
 <%= behavior %>
 </script>
