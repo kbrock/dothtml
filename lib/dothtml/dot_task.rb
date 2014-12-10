@@ -29,27 +29,14 @@ module Dothtml
     end
 
     def define
-      desc "convert dot file into an svg file"
-      task :dot_svg, [:src, :target] do |t, params|
-        source = params[:src]
-        target = params[:target]
-        puts "#{source} -> #{target}"
-        puts `dot -Tsvg #{source} -o #{target}`
-      end
-
-      # would be nice if there were no intermediary steps
-      rule ".svg" => ".dot" do |t|
-        Rake::Task["dot_svg"].execute(:target => t.name, :src => t.source)
-      end
-
-      desc "convert svg file into a html file"
-      task :svg_html, [:src, :target] do |t, params|
+      desc "convert dot file into an html file"
+      task :dot_html, [:src, :target] do |t, params|
         source = params[:src]
         target = params[:target]
 
         puts "#{source} -> #{target}"
 
-        doc = DotHelper.new(source)#.embed_images
+        doc = DotHelper.from_dotfile(source)#.embed_images
         doc.write target, @template,
                   title:    doc.extractTitle,
                   body:     doc.to_xml,
@@ -60,8 +47,8 @@ module Dothtml
                   d3js:     d3js
       end
 
-      rule '.html' => [".svg", style, template] do |t|
-        Rake::Task["svg_html"].execute(:target => t.name, :src => t.source)
+      rule '.html' => [".dot", style, template, behavior] do |t|
+        Rake::Task["dot_html"].execute(:target => t.name, :src => t.source)
         Rake::Task["refresh_browser"].invoke
       end
 

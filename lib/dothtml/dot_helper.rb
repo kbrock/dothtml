@@ -1,29 +1,30 @@
 require "tilt"
 require 'nokogiri'
 require 'set'
+require 'open3'
 
 class DotHelper
-  def initialize(source)
-    @source = source
+  def initialize(svg_contents)
+    @svg_contents = svg_contents
   end
 
-  def dom(filename)
-    Nokogiri::XML.parse(File.read(filename))
+  def dom(contents)
+    Nokogiri::XML.parse(contents)
   end
 
-  def doc
-    doc ||= dom(@source)
+  def svg_dom
+    @svg_dom ||= dom(@svg_contents)
   end
 
   def extractChoices
   end
 
   def descriptions?
-    #doc.css("")
+    #svg_dom.css("")
   end
 
   def extractTitle
-    doc.css("title").first.content()
+    svg_dom.css("title").first.content()
   end
 
   # this currently has too many limitations
@@ -32,17 +33,17 @@ class DotHelper
   def images
     embedded_images = Set.new
 
-    defs = doc.create_element("def")
+    defs = svg_dom.create_element("def")
     namespace = defs.namespace
 
     # assuming the images are the correct size, declare their size
-    doc.css("image").each do |img|
+    svg_dom.css("image").each do |img|
       #STDERR.puts img.attributes.inspect
       file_name = img.attributes["href"].value
       id = file_name.split(".").first.split("/").last
       if file_name =~ /\.svg$/ && ! embedded_images.include?(file_name)
-        src = dom(file_name).at("svg")
-        g = doc.create_element("g", id: id,
+        src = dom(File.read(file_name)).at("svg")
+        g = svg_dom.create_element("g", id: id,
           width: src["width"], height: src["height"])
         # probably not necessary
         g.namespace = namespace
@@ -63,14 +64,38 @@ class DotHelper
   end
 
   def embed_images
-    doc.at("svg").children.before(images)
+    svg_dom.at("svg").children.before(images)
   end
 
+  # uses a fragment to remove extra xml declarations
   def to_xml
-    doc.at("svg").to_xml
+    svg_dom.at("svg").to_xml
   end
 
   def write(file_name, template_name, locals)
     File.write(file_name, Tilt.new(template_name).render(binding, locals))
+  end
+
+  def self.from_dotfile(filename)
+    new(svg_from_dot(File.read(filename)))
+  end
+
+  def self.from_dot(contents)
+    new(svg_from_dot(contents))
+  end
+
+  def self.svg_from_dot(contents)
+    Open3.popen3('dot -Tsvg') do |stdin, stdout, stderr|
+      stdout.binmode
+      stdin.print contents
+      stdin.close
+
+      err = stderr.read
+      if !err.nil? && !err.strip.empty?
+        raise "Error from graphviz:\n#{err}"
+      end
+
+      stdout.read.tap { |str| str.force_encoding 'UTF-8' }
+    end
   end
 end
