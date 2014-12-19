@@ -8,23 +8,23 @@ class DotHelper
     @svg_contents = svg_contents
   end
 
-  def dom(contents)
+  def parse_dom(contents)
     Nokogiri::XML.parse(contents)
   end
 
-  def svg_dom
-    @svg_dom ||= dom(@svg_contents)
+  def dom
+    @dom ||= parse_dom(@svg_contents)
   end
 
   def extractChoices
   end
 
   def descriptions?
-    #svg_dom.css("")
+    #dom.css("")
   end
 
   def extractTitle
-    svg_dom.css("title").first.content()
+    dom.css("title").first.content()
   end
 
   # this currently has too many limitations
@@ -33,24 +33,21 @@ class DotHelper
   def images
     embedded_images = Set.new
 
-    defs = svg_dom.create_element("def")
+    defs = dom.create_element("def")
     namespace = defs.namespace
 
     # assuming the images are the correct size, declare their size
-    svg_dom.css("image").each do |img|
-      #STDERR.puts img.attributes.inspect
+    dom.css("image").each do |img|
       file_name = img.attributes["href"].value
       id = file_name.split(".").first.split("/").last
       if file_name =~ /\.svg$/ && ! embedded_images.include?(file_name)
-        src = dom(File.read(file_name)).at("svg")
-        g = svg_dom.create_element("g", id: id,
+        src = parse_dom(File.read(file_name)).at("svg")
+        g = dom.create_element("g", id: id,
           width: src["width"], height: src["height"])
-        # probably not necessary
-        g.namespace = namespace
-        # this botches their namespace
-        g.add_child(src.children)
-        g.children.each { |ch| ch.namespace = namespace }
         defs.add_child(g)
+        src.children.each do |child|
+          g.add_child(child.clone)
+        end
         embedded_images << file_name
       end
 
@@ -64,12 +61,13 @@ class DotHelper
   end
 
   def embed_images
-    svg_dom.at("svg").children.before(images)
+    dom.at("svg").children.before(images)
+    self
   end
 
   # uses a fragment to remove extra xml declarations
   def to_xml
-    svg_dom.at("svg").to_xml
+    dom.at("svg").to_xml
   end
 
   def write(file_name, template_name, locals)
