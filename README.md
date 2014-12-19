@@ -37,6 +37,12 @@ Or install it yourself as:
 
 TODO: Write usage instructions here
 
+## Similar Projects
+
+- https://github.com/ioquatix/graphviz
+- https://github.com/kui/octopress-graphviz
+- https://github.com/glejeune/Ruby-Graphviz
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/dothtml/fork )
