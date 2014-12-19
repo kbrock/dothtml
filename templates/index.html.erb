@@ -9,13 +9,20 @@
 </div>
 <% if choices || descriptions %>
 <div id="desc-wrap">
+<% if descriptions %>
   <div id="desc">
     <div class="src-dest"></div>
     <div class="active"></div>
   </div>
+<% end %>
 <% if choices %>
   <div id="choices">
     <form>
+      <ul>
+<% choices.each do |choice| %>
+        <li><input type="radio" name="choice" value="<%=choice%>"><%= choice %></li>
+<% end %>
+      </ul>
     </form>
   </div>
 <% end %>

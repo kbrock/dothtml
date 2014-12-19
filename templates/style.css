@@ -44,12 +44,12 @@ text {
   fill: red;
 }
 
-/* machine title */
+/* cluster title */
 .cluster  text {
   fill: #000000;
 }
 
-/* machine background */
+/* cluster background */
 .cluster  path {
   stroke: #000000;
   fill: #dddddd;
