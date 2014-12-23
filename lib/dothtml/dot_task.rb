@@ -47,9 +47,24 @@ module Dothtml
                   d3js:     d3js
       end
 
+      desc "convert dot file into an svg file"
+      task :dot_svg, [:src, :target] do |t, params|
+        source = params[:src]
+        target = params[:target]
+
+        puts "#{source} -> #{target}"
+
+        doc = DotHelper.from_dotfile(source).fix_ids#.embed_images
+        File.write(target, doc.to_xml)
+      end
+
       rule '.html' => [".dot", style, template, behavior] do |t|
         Rake::Task["dot_html"].execute(:target => t.name, :src => t.source)
         Rake::Task["refresh_browser"].invoke
+      end
+
+      rule '.svg' => [".dot"] do |t|
+        Rake::Task["dot_svg"].execute(:target => t.name, :src => t.source)
       end
 
       #TODO find proper tab, offer non chrome options
