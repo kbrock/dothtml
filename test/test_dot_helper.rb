@@ -1,6 +1,6 @@
 require 'minitest_helper'
 
-class TestDotHelper < MiniTest::Unit::TestCase
+class TestDotHelper < Minitest::Test
   def dot_helper(contents = nil)
     DotHelper.new contents
   end

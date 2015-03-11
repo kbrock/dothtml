@@ -1,4 +1,4 @@
 require 'minitest_helper'
 
-class TestDotTask < MiniTest::Unit::TestCase
+class TestDotTask < Minitest::Test
 end
