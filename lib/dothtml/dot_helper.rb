@@ -34,7 +34,6 @@ class DotHelper
     embedded_images = Set.new
 
     defs = dom.create_element("def")
-    namespace = defs.namespace
 
     # assuming the images are the correct size, declare their size
     dom.css("image").each do |img|
