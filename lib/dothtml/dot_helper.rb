@@ -97,12 +97,12 @@ class DotHelper
     new(svg_from_dot(File.read(filename)))
   end
 
-  def self.from_dot(contents)
-    new(svg_from_dot(contents))
+  def self.from_dot(*args)
+    new(svg_from_dot(*args))
   end
 
-  def self.svg_from_dot(contents)
-    Open3.popen3('dot -Tsvg') do |stdin, stdout, stderr|
+  def self.svg_from_dot(contents, language = 'dot')
+    Open3.popen3("#{language} -Tsvg") do |stdin, stdout, stderr|
       stdout.binmode
       stdin.print contents
       stdin.close
