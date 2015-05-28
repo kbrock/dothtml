@@ -39,7 +39,9 @@ class DotHelper
     dom.css("title").first.content()
   end
 
-  # this currently has too many limitations
+  # Embed svg image links directly into the document
+  #
+  # this currently has too many issues
   # working on making this more friendly
   # assume unique list of filenames
   def images
@@ -80,13 +82,17 @@ class DotHelper
   end
 
   def embed_images
-    dom.at("svg").children.before(images)
+    node.children.before(images)
     self
+  end
+
+  def node
+    dom.at("svg")
   end
 
   # uses a fragment to remove extra xml declarations
   def to_xml
-    dom.at("svg").to_xml
+    node.to_xml
   end
 
   def write(file_name, template_name, locals)
