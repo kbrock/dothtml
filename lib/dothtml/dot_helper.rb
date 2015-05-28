@@ -16,9 +16,21 @@ class DotHelper
     @dom ||= parse_dom(@svg_contents)
   end
 
+  # return the list of choices provided for a user
+  #
+  # these choices are displayed to modify the data
+  # on the page
+  #
+  # this will add a body css class and trigger a data
+  # event for d3js
   def extractChoices
   end
 
+  # return true if the nodes have descripions?
+  #
+  # This will create a div box where descriptions
+  # can be displayed
+  #
   def descriptions?
     #dom.css("")
   end

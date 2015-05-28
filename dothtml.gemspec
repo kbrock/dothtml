@@ -9,7 +9,14 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Keenan Brock"]
   spec.email         = ["keenan@thebrocks.net"]
   spec.summary       = %q{Make conversion of dot to html easier}
-  spec.description   = %q{Make conversion of dot to html easier}
+  spec.description   = <<-DESCRIPTION
+                          In a world, full of html, and javascript,
+                          there can exist only one graphing library.
+                          But there still is hope in trusty graphviz.
+
+                          This makes the conversion of dot to html
+                          and d3js easier.
+                          DESCRIPTION
   spec.homepage      = "http://github.com/kbrock/dothtml"
   spec.license       = "MIT"
 
@@ -18,8 +25,6 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency 'guard'
-  spec.add_dependency 'guard-rake'
   spec.add_dependency 'nokogiri'
   # possibly remove this
   spec.add_dependency 'tilt'
