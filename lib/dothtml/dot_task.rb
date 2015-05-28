@@ -67,7 +67,8 @@ module Dothtml
         Rake::Task["dot_svg"].execute(:target => t.name, :src => t.source)
       end
 
-      #TODO find proper tab, offer non chrome options
+      # TODO: find proper tab, offer non chrome options
+      # use guard / live upate?
       desc "use applescript to refresh front most window in chrome"
       task :refresh_browser do
         puts "refreshing browser"
