@@ -4,6 +4,9 @@ require 'set'
 require 'open3'
 
 class DotHelper
+  GRAPH_REGEX = /\b(?:di)?graph\b[^\[]*\{/mi
+  DOT_REGEX = /->/
+
   def initialize(svg_contents)
     @svg_contents = svg_contents
   end
@@ -108,8 +111,32 @@ class DotHelper
     new(svg_from_dot(File.read(filename)))
   end
 
-  def self.from_dot(*args)
-    new(svg_from_dot(*args))
+  def self.detect_language(contents, language = nil)
+    language || ((contents =~ DOT_REGEX) ? 'dot' : 'neato')
+  end
+
+  def self.enhance(contents, language)
+    if contents =~ GRAPH_REGEX
+      contents
+    elsif language == 'dot'
+      <<-GRAPH
+      digraph {
+        #{contents}
+      }
+      GRAPH
+    else
+      <<-GRAPH
+      graph {
+        #{contents}
+      }
+      GRAPH
+    end
+  end
+
+  def self.from_dot(contents, language = 'dot')
+    language = detect_language(contents, language)
+    contents = enhance(contents, language)
+    new(svg_from_dot(contents, language))
   end
 
   def self.svg_from_dot(contents, language = 'dot')
