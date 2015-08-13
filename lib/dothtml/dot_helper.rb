@@ -79,30 +79,10 @@ class DotHelper
     end
   end
 
-  def merge_id_class(old_id, old_class)
-    new_id, new_class = extract_id_class(old_id)
-    [new_id, [old_class, new_class].compact.join(" ")]
-  end
-
-  # some nodes are of the form <div id="x1 class='other'" class="c1">
-  # assume (class= is present)
-  def fix_node_id(node)
-    new_id, new_class = merge_id_class(node["id"], node["class"])
-    node["id"] = new_id
-    node["class"] = new_class
-    node
-  end
-
   def embed_images
     dom.at("svg").children.before(images)
     self
   end
-
-  def fix_ids
-    dom.xpath("//*[contains(@id,'class=')]").each { |n| fix_node_id(n) }
-    self
-  end
-
 
   # uses a fragment to remove extra xml declarations
   def to_xml

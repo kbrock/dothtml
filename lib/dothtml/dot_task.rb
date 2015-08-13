@@ -40,7 +40,7 @@ module Dothtml
 
         puts "#{source} -> #{target}"
 
-        doc = DotHelper.from_dotfile(source).fix_ids#.embed_images
+        doc = DotHelper.from_dotfile(source)#.embed_images
         doc.write target, @template,
                   title:    doc.extractTitle,
                   body:     doc.to_xml,
@@ -58,7 +58,7 @@ module Dothtml
 
         puts "#{source} -> #{target}"
 
-        doc = DotHelper.from_dotfile(source).fix_ids#.embed_images
+        doc = DotHelper.from_dotfile(source)#.embed_images
         File.write(target, doc.to_xml)
       end
 
