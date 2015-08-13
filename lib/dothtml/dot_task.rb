@@ -25,7 +25,11 @@ module Dothtml
     end
 
     def cdn=(val)
-      @d3js = val ? "//cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" : "d3.v3.js"
+      @d3js = case val
+              when true then "//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"
+              when false then "d3.v3.js"
+              else val
+              end
     end
 
     def define
