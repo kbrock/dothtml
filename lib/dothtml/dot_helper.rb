@@ -86,6 +86,11 @@ class DotHelper
     self
   end
 
+  def remove_comments
+    dom.xpath('//comment()').each { |comment| comment.remove }
+    self
+  end
+
   def node
     dom.at("svg")
   end
