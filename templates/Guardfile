@@ -1,6 +1,10 @@
-guard 'rake', :task => :html do
-  watch(/.dot$/)
-  #watch('index.html.erb')
-  #watch('style.css')
-  #watch('behavior.js')
+guard :shell do
+  watch(/.dot$/) do |m|
+    dothtml_path = ENV["DOTHTML_PATH"] || "dothtml"
+    system("#{dothtml_path} build #{m.join(" ")}")
+  end
+end
+
+guard :livereload do
+  watch(/.html$/)
 end

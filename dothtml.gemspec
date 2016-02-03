@@ -27,6 +27,9 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'nokogiri'
   spec.add_dependency 'trollop'
+  spec.add_dependency 'guard'
+  spec.add_dependency 'guard-shell'
+  spec.add_dependency 'guard-livereload'
   # possibly remove this
   spec.add_dependency 'tilt'
 

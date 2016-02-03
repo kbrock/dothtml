@@ -14,6 +14,13 @@ into .svg and .html files.  This is the default command if nothing
 is specified on the command line.
         EOS
       },
+      "watch" => {
+        "usage"    => "watch",
+        "synopsis" => <<-EOS
+Starts a guard process, which automatically does a build as .dot
+files are changed.
+        EOS
+      },
     }
 
     COMMAND_NAMES = COMMANDS.keys + %w(version help)
@@ -86,6 +93,15 @@ is specified on the command line.
         end
 
       DotTask.new.build(files)
+    end
+
+    def watch_command
+      guardfile = File.join(TEMPLATES_DIR, "Guardfile")
+      env = {
+        "DOTHTML_PATH"   => File.expand_path($0),
+        "BUNDLE_GEMFILE" => File.expand_path("../../Gemfile", __dir__)
+      }
+      exec(env, "bundle exec guard -G #{guardfile}")
     end
 
     def version_command
