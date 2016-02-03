@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency 'nokogiri'
+  spec.add_dependency 'trollop'
   # possibly remove this
   spec.add_dependency 'tilt'
 
