@@ -1,0 +1,13 @@
+digraph Sample {
+	graph [ fontname="Helvetica-Bold" ]
+	node  [ id="\N" shape="Mrecord" style="filled" fontname="Helvetica" fillcolor="#ffffff" penwidth="2" ]
+	edge  [ arrowsize="0.5" fontname="Helvetica" ]
+
+	label="Sample"
+	style="rounded"
+
+	object1 -> object2
+	object1 -> object3
+	object2 -> object4 [style="dotted"]
+	object3 -> object4 [style="dashed"]
+}

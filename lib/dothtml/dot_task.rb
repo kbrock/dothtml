@@ -32,6 +32,33 @@ module Dothtml
       end
     end
 
+    def create(dir)
+      require 'colorize'
+
+      if Dir.exists?(dir)
+        say_status(:exists, dir)
+      else
+        FileUtils.mkdir_p(dir)
+        say_status(:create, dir)
+      end
+
+      sample = File.join(dir, "sample.dot")
+      if File.exists?(sample)
+        say_status(:exists, sample)
+      else
+        sample_source = File.join(TEMPLATES_DIR, "sample.dot")
+        FileUtils.cp(sample_source, sample)
+        say_status(:create, sample)
+      end
+
+      git_dir = File.join(dir, ".git")
+      if Dir.exists?(git_dir)
+        say_status(:exists, git_dir)
+      else
+        system("git init", :chdir => dir)
+      end
+    end
+
     private
 
     def dot_to_html(source)
@@ -55,6 +82,17 @@ module Dothtml
 
       doc = DotHelper.from_dotfile(source)#.embed_images
       File.write(target, doc.to_xml)
+    end
+
+    def say_status(mode, text)
+      mode_text =
+        case mode
+        when :exists then mode.to_s.yellow.bold
+        when :create then mode.to_s.green.bold
+        else              mode.to_s.bold
+        end
+
+      puts "\t#{mode_text}\t#{text}"
     end
   end
 end

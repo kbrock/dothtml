@@ -14,6 +14,12 @@ into .svg and .html files.  This is the default command if nothing
 is specified on the command line.
         EOS
       },
+      "create" => {
+        "usage"    => "create <dir>",
+        "synopsis" => <<-EOS
+Generates a new Dothtml repo at the indicated dir.
+        EOS
+      },
       "watch" => {
         "usage"    => "watch",
         "synopsis" => <<-EOS
@@ -93,6 +99,13 @@ files are changed.
         end
 
       DotTask.new.build(files)
+    end
+
+    def create_command
+      dir = args.shift
+      Trollop.die "dir not specified" if dir.nil?
+
+      DotTask.new.create(dir)
     end
 
     def watch_command
