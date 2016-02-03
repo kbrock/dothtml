@@ -1,5 +1,0 @@
-source 'https://rubygems.org'
-
-group "diagram" do
-  gem 'dothtml'
-end
