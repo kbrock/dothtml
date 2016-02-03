@@ -51,6 +51,14 @@ module Dothtml
         say_status(:create, sample)
       end
 
+      gitignore = File.join(dir, ".gitignore")
+      if File.exists?(gitignore)
+        say_status(:exists, gitignore)
+      else
+        File.write(gitignore, "*.html\n*.svg")
+        say_status(:create, gitignore)
+      end
+
       git_dir = File.join(dir, ".git")
       if Dir.exists?(git_dir)
         say_status(:exists, git_dir)
