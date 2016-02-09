@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.1.0 - 2016-02-09
+### Added
+- Rewritten CLI that supports subcommands build, create, and watch
+- Detect/Add presence of outer `graph {}`
+- Added minimal layout detection (neato vs dot)
+- Added support for arbitrary cdn value
+
+### Removed
+- Removed merging of id and class as class attribute is now supported by graphviz.
+
 ## 0.0.3 - 2014-12-23
 ### Added
 - Rule to generate an svg file
