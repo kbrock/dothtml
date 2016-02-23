@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "http://github.com/kbrock/dothtml"
   spec.license       = "MIT"
 
-  spec.files         = `git ls-files -z`.split("\x0")
+  spec.files         = `git ls-files -z`.split("\x0") if Dir.exist?(File.join(__dir__, ".git"))
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
