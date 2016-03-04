@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [0.1.1] - 2016-03-04
+### Fixed
+- Fixed `dothtml watch` not finding the proper executable
+- Fixed `dothtml watch` complaining with `fatal: Not a git repository (or any of the parent directories): .git`
 
 ## [0.1.0] - 2016-02-09
 ### Added
