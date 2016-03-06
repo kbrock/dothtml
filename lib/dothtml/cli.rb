@@ -111,7 +111,7 @@ files are changed.
     def watch_command
       guardfile = File.join(TEMPLATES_DIR, "Guardfile")
       env = {
-        "DOTHTML_PATH"   => File.expand_path($0),
+        "DOTHTML_PATH"   => File.expand_path("../../exe/dothtml", __dir__),
         "BUNDLE_GEMFILE" => File.expand_path("../../Gemfile", __dir__)
       }
       exec(env, "bundle exec guard -G #{guardfile}")
